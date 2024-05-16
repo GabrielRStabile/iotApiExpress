@@ -12,3 +12,5 @@ const isAuthorized = (req, res, next) => {
     return next();
   });
 };
+
+module.exports = isAuthorized;
