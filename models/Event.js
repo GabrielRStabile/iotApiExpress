@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 
 const EventSchema = new mongoose.Schema({
   deviceId: { type: Number, required: true },
-  eventType: { type: String, required: true },
+  eventType: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'EventType',
+    required: true,
+  },
   timeStamp: { type: Date, default: Date.now },
   details: { type: String },
 });
