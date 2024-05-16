@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const indexRouter = require('./routes/index');
 const eventsRouter = require('./routes/events');
+const eventTypeRouter = require('./routes/eventType');
 
 require('dotenv').config();
 
@@ -25,8 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/', indexRouter);
 app.use('/events', eventsRouter);
+app.use('/eventType', eventTypeRouter);
 
-// catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
