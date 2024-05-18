@@ -11,4 +11,12 @@ const EventSchema = new mongoose.Schema({
   details: { type: String },
 });
 
+EventSchema.set('toJSON', {
+  transform(__, ret, _) {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+  },
+});
+
 module.exports = mongoose.model('Event', EventSchema, 'event');
