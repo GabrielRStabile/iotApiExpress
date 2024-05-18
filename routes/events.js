@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Event = require('../models/Event');
+const isAuthorized = require('../middleware/isAuthorized');
 
-router.get('/', async (req, res) => {
+router.get('/', isAuthorized, async (_, res) => {
   const events = await Event.find();
   res.json(events);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', isAuthorized, async (req, res) => {
   const event = new Event(req.body);
 
   const hasErrors = event.validateSync();
@@ -22,7 +23,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', isAuthorized, async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
 
@@ -38,7 +39,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', isAuthorized, async (req, res) => {
   const event = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
   const hasErrors = event.validateSync();
@@ -53,7 +54,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', isAuthorized, async (req, res) => {
   const event = await Event.findByIdAndDelete(req.params.id);
 
   if (!event) {
